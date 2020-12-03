@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RobustaTask</string>
+    <string name="search">search</string>
+    <string name="search_tip_message">Search in all products  using the product name.</string>
 </resources>

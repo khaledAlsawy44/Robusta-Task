@@ -18,9 +18,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
