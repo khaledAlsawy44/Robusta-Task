@@ -9,7 +9,10 @@ import com.example.robustatask.domain.Product
 class ProductsRepository(
     private val remote: ProductsRemoteDataSource
 ) : IProductsRepository {
-    override suspend fun fetchProducts(searchKey: String): Either<AppFailure, List<Product>> {
-        return remote.fetchProducts(searchKey)
+    override suspend fun fetchProducts(
+        searchKey: String,
+        page: Int
+    ): Either<AppFailure, List<Product>> {
+        return remote.fetchProducts(searchKey, page)
     }
 }

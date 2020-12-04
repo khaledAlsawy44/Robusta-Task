@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.squareup.moshi.JsonClass
 import retrofit2.Response
+import timber.log.Timber
 
 @JsonClass(generateAdapter = true)
 data class ApiResponse<T>(
@@ -15,6 +16,8 @@ data class ApiResponse<T>(
 )
 
 fun <T, R> ApiResponse<T>.mapResponseData(transform: (T) -> R?): Either<AppFailure, R> {
+    Timber.tag("ssssssssss").d(this.toString())
+
     if (Success == false)
         return ApiErrors.ServerError(Message).left()
 

@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL = "https://nusratelsunnahacademy.com/nosrah/api/"
+const val BASE_URL = "https://www.goodreads.com/api/"
 
 val networkModule = module {
     single { okHttpClient(get()) }

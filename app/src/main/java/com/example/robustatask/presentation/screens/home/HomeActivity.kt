@@ -21,14 +21,14 @@ class HomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.searchTIET.doAfterTextChanged {
-            search(binding.searchTIET.text.toString())
+        binding.searchTIL.doAfterTextChanged {
+            search(binding.searchTIL.text.toString())
         }
     }
 
     private fun search(searchKey: String?) {
         searchKey?.let {
-            viewModel.dispatch(ProductsActions.Search(it))
+            viewModel.search(it)
         }
     }
 }

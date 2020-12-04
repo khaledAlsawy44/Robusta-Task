@@ -7,39 +7,29 @@
     android:background="@color/gray"
     tools:context=".presentation.screens.home.HomeActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
+
+    <EditText
         android:id="@+id/searchTIL"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="4dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawablePadding="16dp"
         android:hint="@string/search"
-        app:boxBackgroundColor="@color/white"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
+        android:padding="16dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchTIET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="test" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchTIL"

@@ -75,4 +75,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    implementation 'com.freeletics.flowredux:flowredux:0.3.0'
+    implementation 'com.freeletics.flowredux:dsl:0.3.0'
+
 }

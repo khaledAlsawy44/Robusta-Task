@@ -1,17 +1,18 @@
 package com.example.robustatask.presentation.screens.home
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.robustatask.domain.Product
 import com.example.robustatask.presentation.components.productsView
+import com.example.robustatask.presentation.components.showMoreView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class ProductsController(
-    val onClicked: (product: Product) -> Unit
-) : TypedEpoxyController<List<Product>>() {
+    private val onClicked: (product: ProductUi) -> Unit,
+    private val onShowMoreClicked: () -> Unit
+) : TypedEpoxyController<ProductsState.Success>() {
 
-    override fun buildModels(products: List<Product>) {
-        products.forEach {
+    override fun buildModels(state: ProductsState.Success) {
+        state.products.forEach {
             productsView {
                 id(it.productId.id)
                 productData(it)
@@ -20,6 +21,13 @@ class ProductsController(
                 }
             }
         }
+        if (state.products.size == 10)
+            showMoreView {
+                id(-1)
+                showMoreState(state.isSearching)
+                showMoreListener {
+                    onShowMoreClicked()
+                }
+            }
     }
-
 }

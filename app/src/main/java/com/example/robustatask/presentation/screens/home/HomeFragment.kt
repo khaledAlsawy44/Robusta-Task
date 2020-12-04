@@ -4,21 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.robustatask.R
 import com.example.robustatask.databinding.HomeFragmentBinding
-import com.example.robustatask.domain.Product
+import com.example.robustatask.presentation.flowredux.StateFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import reactivecircus.flowbinding.android.view.clicks
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
-class HomeFragment : Fragment(R.layout.home_fragment) {
-    private val viewModel: HomeViewModel by sharedViewModel()
+class HomeFragment :
+    StateFragment<ProductsState, ProductsActions, ProductsEffects>(R.layout.home_fragment) {
+    private val homeViewModel: HomeViewModel by sharedViewModel()
+    override val viewModel: ProductsViewModel by viewModel()
     private var uiStateJob: Job? = null
 
     private var _binding: HomeFragmentBinding? = null
@@ -26,9 +34,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
 
     private val productsController =
-        ProductsController(::onProductClicked)
+        ProductsController(::onProductClicked, ::onShowMore)
 
-    private fun onProductClicked(product: Product) {
+    private fun onShowMore() {
+        viewModel.dispatch(ProductsActions.ShowMore)
+    }
+
+    private fun onProductClicked(product: ProductUi) {
 
     }
 
@@ -47,18 +59,27 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.productsRv.setController(productsController)
-
-//        viewModel.stateLiveData.observe(viewLifecycleOwner) { state ->
-//            renderState(state)
-//        }
-        uiStateJob = lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect { state ->
-                renderState(state)
+        homeViewModel.searchLiveData.observe(viewLifecycleOwner) { searchKey ->
+            searchKey?.let {
+                viewModel.dispatch(ProductsActions.Search(it))
             }
         }
+
+        binding.errorTryAgain
+            .clicks()
+            .debounce(150)
+            .onEach {
+                viewModel.dispatch(ProductsActions.TryAgain)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+//        uiStateJob = lifecycleScope.launchWhenStarted {
+//            viewModel.uiState.collect { state ->
+//                renderState(state)
+//            }
+//        }
     }
 
-    private fun renderState(state: ProductsState) {
+    override fun renderState(state: ProductsState) {
         when (state) {
             ProductsState.InitialState -> binding.showInitialState()
             ProductsState.Loading -> binding.showLoadingState()
@@ -67,6 +88,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 state = state,
                 controller = productsController
             )
+            is ProductsState.Empty -> binding.showEmptyState(state.searchKey)
         }
     }
 
@@ -79,5 +101,17 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onEffect(effect: ProductsEffects) {
+        when (effect) {
+            is ProductsEffects.ShowSnakeBar -> {
+                Snackbar.make(
+                    requireView(),
+                    effect.message ?: getString(R.string.default_error_message),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 }

@@ -5,6 +5,8 @@ import com.example.robustatask.data.source.ProductsRemoteDataSource
 import com.example.robustatask.data.source.services.ProductsService
 import com.example.robustatask.domain.IProductsRepository
 import com.example.robustatask.presentation.screens.home.HomeViewModel
+import com.example.robustatask.presentation.screens.home.ProductsStateMachine
+import com.example.robustatask.presentation.screens.home.ProductsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -14,7 +16,9 @@ import retrofit2.Retrofit
 val homeModule = module {
     single<IProductsRepository> { ProductsRepository(get()) }
     single { ProductsRemoteDataSource(get()) }
-    viewModel { HomeViewModel(get()) }
+    factory { ProductsStateMachine(get()) }
+    viewModel { HomeViewModel() }
+    viewModel { ProductsViewModel(get()) }
     single { productService(get()) }
 }
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ProgressBar
+        android:id="@+id/loadingMorePb"
+        android:layout_width="30dp"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@id/showMoreTv"
+        app:layout_constraintEnd_toStartOf="@id/showMoreTv"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/showMoreTv" />
+
+    <TextView
+        android:id="@+id/showMoreTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="@string/show_more"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/loadingMorePb"
+        app:layout_constraintTop_toTopOf="parent" />
+</merge>

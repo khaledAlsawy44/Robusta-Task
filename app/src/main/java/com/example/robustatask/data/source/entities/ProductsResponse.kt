@@ -5,5 +5,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ProductsResponse(
     val productId: Int? = null,
-    val productName: String? = null
+    val productName: String? = null,
+    val productDescription: String? = null
 )
