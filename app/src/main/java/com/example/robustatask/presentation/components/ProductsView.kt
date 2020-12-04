@@ -16,7 +16,7 @@ import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.example.robustatask.databinding.ViewProductBinding
-import com.example.robustatask.presentation.screens.home.ProductUi
+import com.example.robustatask.presentation.screens.products.ProductUi
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn

@@ -1,8 +1,9 @@
-package com.example.robustatask.presentation.screens.home
+package com.example.robustatask.presentation.screens.products
 
 import arrow.core.Either
 import com.example.robustatask.domain.IProductsRepository
 import com.example.robustatask.presentation.flowredux.StateMachine
+import com.example.robustatask.presentation.screens.home.toProductUi
 import com.freeletics.flowredux.GetState
 import com.freeletics.flowredux.dsl.SetState
 

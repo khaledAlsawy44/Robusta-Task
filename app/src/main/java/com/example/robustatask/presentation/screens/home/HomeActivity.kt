@@ -2,7 +2,11 @@ package com.example.robustatask.presentation.screens.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import com.example.robustatask.R
 import com.example.robustatask.databinding.HomeActivityBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -23,6 +27,13 @@ class HomeActivity : AppCompatActivity() {
 
         binding.searchTIL.doAfterTextChanged {
             search(binding.searchTIL.text.toString())
+        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainFragContainer) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.searchTIL.isVisible = destination.id != R.id.detailsFragment
         }
     }
 

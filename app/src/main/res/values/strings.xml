@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">RobustaTask</string>
     <string name="search">search…</string>
-    <string name="search_tip_message">Search in all products  using the product name.</string>
+    <string name="search_tip_message">Start searching by \nproduct name.</string>
     <string name="show_more">Show More</string>
     <string name="no_data_for_search_result">No results found for \'%1$s\'</string>
     <string name="default_error_message">Something went wrong</string>
     <string name="tab_to_try_again">Tab to try again</string>
+    <string name="welcome_message">Hi there, \nYou have selected this product.</string>
 </resources>

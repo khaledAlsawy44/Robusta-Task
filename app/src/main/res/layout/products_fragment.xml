@@ -2,27 +2,39 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/backgroundColor"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <ImageView
+        android:id="@+id/searchIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_search_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".4"
+        app:tint="@color/dark_gray" />
 
     <TextView
         android:id="@+id/searchTipTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:padding="16dp"
         android:text="@string/search_tip_message"
         android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/searchIv" />
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/productsRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:padding="8dp"
         android:visibility="gone"
         app:itemSpacing="4dp"
@@ -40,7 +52,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <View
         android:id="@+id/errorParentView"
@@ -78,25 +89,17 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/errorTryAgain"
         style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:insetBottom="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/tab_to_try_again"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:visibility="gone"
-        app:backgroundTint="@color/white"
         app:icon="@drawable/ic_icons8_restart"
         app:iconGravity="textEnd"
         app:iconPadding="8dp"
         app:iconSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/errorGuideline" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/errorGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".85" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/errorMessageTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

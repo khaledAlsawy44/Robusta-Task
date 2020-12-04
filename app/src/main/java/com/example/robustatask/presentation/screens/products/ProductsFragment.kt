@@ -1,18 +1,19 @@
-package com.example.robustatask.presentation.screens.home
+package com.example.robustatask.presentation.screens.products
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.robustatask.R
-import com.example.robustatask.databinding.HomeFragmentBinding
+import com.example.robustatask.databinding.ProductsFragmentBinding
 import com.example.robustatask.presentation.flowredux.StateFragment
+import com.example.robustatask.presentation.screens.home.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,25 +24,33 @@ import reactivecircus.flowbinding.android.view.clicks
 @FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
-class HomeFragment :
-    StateFragment<ProductsState, ProductsActions, ProductsEffects>(R.layout.home_fragment) {
+class ProductsFragment :
+    StateFragment<ProductsState, ProductsActions, ProductsEffects>(R.layout.products_fragment) {
     private val homeViewModel: HomeViewModel by sharedViewModel()
     override val viewModel: ProductsViewModel by viewModel()
-    private var uiStateJob: Job? = null
 
-    private var _binding: HomeFragmentBinding? = null
+    private var _binding: ProductsFragmentBinding? = null
     private val binding get() = _binding!!
 
 
     private val productsController =
-        ProductsController(::onProductClicked, ::onShowMore)
+        ProductsController(::onProductClicked, ::onShowMore, ::onScrollToToClicked)
+
+    private fun onScrollToToClicked() {
+        binding.productsRv.smoothScrollToPosition(0)
+    }
 
     private fun onShowMore() {
         viewModel.dispatch(ProductsActions.ShowMore)
     }
 
     private fun onProductClicked(product: ProductUi) {
-
+        findNavController().navigate(
+            ProductsFragmentDirections.actionProductsFragmentToDetailsFragment(
+                productName = product.productName.name,
+                productId = product.productId.id
+            )
+        )
     }
 
 
@@ -50,7 +59,7 @@ class HomeFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        _binding = ProductsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -72,11 +81,6 @@ class HomeFragment :
                 viewModel.dispatch(ProductsActions.TryAgain)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-//        uiStateJob = lifecycleScope.launchWhenStarted {
-//            viewModel.uiState.collect { state ->
-//                renderState(state)
-//            }
-//        }
     }
 
     override fun renderState(state: ProductsState) {
@@ -92,11 +96,6 @@ class HomeFragment :
         }
     }
 
-    override fun onStop() {
-        // Stop collecting when the View goes to the background
-        uiStateJob?.cancel()
-        super.onStop()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

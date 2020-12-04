@@ -1,4 +1,4 @@
-package com.example.robustatask.presentation.screens.home
+package com.example.robustatask.presentation.screens.products
 
 import com.example.robustatask.presentation.flowredux.StateViewModel
 

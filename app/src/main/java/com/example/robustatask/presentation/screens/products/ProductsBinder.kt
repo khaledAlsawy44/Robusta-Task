@@ -1,12 +1,13 @@
-package com.example.robustatask.presentation.screens.home
+package com.example.robustatask.presentation.screens.products
 
 import androidx.core.view.isVisible
 import com.example.robustatask.R
-import com.example.robustatask.databinding.HomeFragmentBinding
+import com.example.robustatask.databinding.ProductsFragmentBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-fun HomeFragmentBinding.showInitialState() {
+fun ProductsFragmentBinding.showInitialState() {
     searchTipTv.isVisible = true
+    searchIv.isVisible = true
     loadingPb.isVisible = false
     productsRv.isVisible = false
 
@@ -19,9 +20,10 @@ fun HomeFragmentBinding.showInitialState() {
 
 }
 
-fun HomeFragmentBinding.showLoadingState() {
+fun ProductsFragmentBinding.showLoadingState() {
     loadingPb.isVisible = true
     searchTipTv.isVisible = false
+    searchIv.isVisible = false
     productsRv.isVisible = false
 
     errorIv.isVisible = false
@@ -30,9 +32,10 @@ fun HomeFragmentBinding.showLoadingState() {
     errorTryAgain.isVisible = false
 }
 
-fun HomeFragmentBinding.showErrorState() {
+fun ProductsFragmentBinding.showErrorState() {
     loadingPb.isVisible = false
     searchTipTv.isVisible = false
+    searchIv.isVisible = false
     productsRv.isVisible = false
     errorIv.isVisible = true
     errorMessageTv.isVisible = true
@@ -40,10 +43,11 @@ fun HomeFragmentBinding.showErrorState() {
     errorTryAgain.isVisible = true
 }
 
-fun HomeFragmentBinding.showEmptyState(searchKey: String) {
+fun ProductsFragmentBinding.showEmptyState(searchKey: String) {
     loadingPb.isVisible = false
     productsRv.isVisible = false
     searchTipTv.isVisible = true
+    searchIv.isVisible = false
 
     errorIv.isVisible = false
     errorMessageTv.isVisible = false
@@ -54,13 +58,14 @@ fun HomeFragmentBinding.showEmptyState(searchKey: String) {
 }
 
 @ExperimentalCoroutinesApi
-fun HomeFragmentBinding.showSuccessState(
+fun ProductsFragmentBinding.showSuccessState(
     state: ProductsState.Success,
     controller: ProductsController
 ) {
     productsRv.isVisible = true
     loadingPb.isVisible = false
     searchTipTv.isVisible = false
+    searchIv.isVisible = false
 
     controller.setData(state)
 }
